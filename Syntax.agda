@@ -14,7 +14,7 @@ open import Relation.Nullary.Decidable
 open import DingleDangle.Cat
 open import DingleDangle.Number
 open import DingleDangle.Features
-open import DingleDangle.Pair
+open import DingleDangle.Atom
 
 infixr 0 _▷_
 data * : Set₁ where
@@ -30,12 +30,13 @@ _≲?_ : * → * → Bool
 _≲_ : * → * → Set
 σ ≲ τ = T (σ ≲? τ)
 
-Cx = Vec *
 
 mutual 
   infixr 0 _⊢_
   infixr 0 _$_
   infixr 0 _∋_
+
+  Cx = Vec *
 
   data _∋_ : ∀ {n} → Cx n → * → Set₁ where
     top : ∀ {n τ} {Γ : Cx n} → (τ ∷ Γ) ∋ τ

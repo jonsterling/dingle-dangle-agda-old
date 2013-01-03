@@ -1,4 +1,4 @@
-module DingleDangle.Pair where
+module DingleDangle.Atom where
 
 open import Data.List hiding (any; all)
 open import Data.List.Any
