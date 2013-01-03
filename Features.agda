@@ -1,6 +1,5 @@
 module DingleDangle.Features where
 
-open import Data.Product
 open import Relation.Nullary
 open import Relation.Binary
 open import Relation.Binary.PropositionalEquality as PropEq

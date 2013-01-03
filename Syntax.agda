@@ -1,21 +1,15 @@
 module DingleDangle.Syntax where
 
 open import Data.String
-open import Data.Product
 open import Data.Nat
 open import Data.Vec hiding (_∈_)
 open import Data.List
-
-open import Data.Fin
 
 open import Data.Empty
 open import Data.Unit
 open import Data.Bool
 
-open import Relation.Nullary.Core
 open import Relation.Nullary.Decidable
-open import Relation.Binary.Core
-open import Relation.Binary.PropositionalEquality
 
 open import DingleDangle.Cat
 open import DingleDangle.Number
