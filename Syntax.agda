@@ -17,7 +17,7 @@ open import DingleDangle.Features
 open import DingleDangle.Atom
 
 infixr 0 _▷_
-data * : Set₁ where
+data * : Set where
   !_  : Atom → *
   _▷_ : * → * → *
 
@@ -36,15 +36,15 @@ mutual
   infixr 0 _$_
   infixr 0 _∋_
 
-  data Cx : Set₁ where
+  data Cx : Set where
     ε : Cx
     _,_ : Cx → * → Cx
 
-  data _∋_ : Cx → * → Set₁ where
+  data _∋_ : Cx → * → Set where
     top : ∀ {Γ τ} → Γ , τ ∋ τ
     pop : ∀ {Γ σ τ} → Γ ∋ τ → Γ , σ ∋ τ
   
-  data _⊢_ Γ : * → Set₁ where
+  data _⊢_ Γ : * → Set where
     word : ∀ {fs} → String → Γ ⊢ ! fs
     cast : ∀ {σ τ} {{ _ : σ ≲ τ }} → Γ ⊢ σ → Γ ⊢ τ
     var  : ∀ {τ} → Γ ∋ τ → Γ ⊢ τ
@@ -52,7 +52,7 @@ mutual
     _$_  : ∀ {σ τ} → Γ ⊢ σ ▷ τ → Γ ⊢ σ → Γ ⊢ τ
 
   
-⟦_⟧ : * → Set₁
+⟦_⟧ : * → Set
 ⟦ t ⟧ = ∀ {Γ} → Γ ⊢ t
 
 dog : ⟦ ! (⟨ num ∶ sing ⟩ ∷ ⟨ cat ∶ N ⟩ ∷ []) ⟧

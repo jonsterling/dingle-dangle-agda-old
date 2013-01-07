@@ -13,7 +13,7 @@ open import Data.Product
 open import DingleDangle.DecEq
 open import DingleDangle.Features
 
-record Pair : Set₁ where
+record Pair : Set where
   constructor ⟨_∶_⟩
   field
     key : Features
