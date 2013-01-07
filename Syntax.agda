@@ -40,25 +40,24 @@ _≲?_ : Decidable _≲_
 ... | _       | no ¬τ≲t = no $ ¬τ≲t ∘ λ { (_ ▷≲ x) → x }
 ... | no ¬s≲σ | _ = no $ ¬s≲σ ∘ λ { (x ▷≲ _) → x }
 
-mutual 
-  infixr 0 _⊢_
-  infixr 0 _#_
-  infixr 0 _∋_
+infixr 0 _⊢_
+infixr 0 _#_
+infixr 0 _∋_
 
-  data Cx : Set where
-    ε : Cx
-    _,_ : Cx → * → Cx
+data Cx : Set where
+  ε : Cx
+  _,_ : Cx → * → Cx
 
-  data _∋_ : Cx → * → Set where
-    top : ∀ {Γ τ} → Γ , τ ∋ τ
-    pop : ∀ {Γ σ τ} → Γ ∋ τ → Γ , σ ∋ τ
-  
-  data _⊢_ Γ : * → Set where
-    word : ∀ {fs} → String → Γ ⊢ ! fs
-    cast : ∀ {σ τ} {{ _ : True (σ ≲? τ) }} → Γ ⊢ σ → Γ ⊢ τ
-    var  : ∀ {τ} → Γ ∋ τ → Γ ⊢ τ
-    `λ   : ∀ {σ τ} → Γ , σ ⊢ τ → Γ ⊢ σ ▷ τ
-    _#_  : ∀ {σ τ} → Γ ⊢ σ ▷ τ → Γ ⊢ σ → Γ ⊢ τ
+data _∋_ : Cx → * → Set where
+  top : ∀ {Γ τ} → Γ , τ ∋ τ
+  pop : ∀ {Γ σ τ} → Γ ∋ τ → Γ , σ ∋ τ
+
+data _⊢_ Γ : * → Set where
+  word : ∀ {fs} → String → Γ ⊢ ! fs
+  cast : ∀ {σ τ} {{ _ : True (σ ≲? τ) }} → Γ ⊢ σ → Γ ⊢ τ
+  var  : ∀ {τ} → Γ ∋ τ → Γ ⊢ τ
+  `λ   : ∀ {σ τ} → Γ , σ ⊢ τ → Γ ⊢ σ ▷ τ
+  _#_  : ∀ {σ τ} → Γ ⊢ σ ▷ τ → Γ ⊢ σ → Γ ⊢ τ
 
   
 ⟦_⟧ : * → Set
