@@ -36,22 +36,24 @@ mutual
   infixr 0 _$_
   infixr 0 _∋_
 
-  Cx = Vec *
+  data Cx : Set₁ where
+    ε : Cx
+    _,_ : Cx → * → Cx
 
-  data _∋_ : ∀ {n} → Cx n → * → Set₁ where
-    top : ∀ {n τ} {Γ : Cx n} → (τ ∷ Γ) ∋ τ
-    pop : ∀ {n σ τ} {Γ : Cx n} → Γ ∋ τ → (σ ∷ Γ) ∋ τ
+  data _∋_ : Cx → * → Set₁ where
+    top : ∀ {Γ τ} → Γ , τ ∋ τ
+    pop : ∀ {Γ σ τ} → Γ ∋ τ → Γ , σ ∋ τ
   
-  data _⊢_ {n : ℕ} (Γ : Cx n) : * → Set₁ where
+  data _⊢_ Γ : * → Set₁ where
     word : ∀ {fs} → String → Γ ⊢ ! fs
     cast : ∀ {σ τ} {{ _ : σ ≲ τ }} → Γ ⊢ σ → Γ ⊢ τ
     var  : ∀ {τ} → Γ ∋ τ → Γ ⊢ τ
-    `λ   : ∀ {σ τ} → σ ∷ Γ ⊢ τ → Γ ⊢ σ ▷ τ
+    `λ   : ∀ {σ τ} → Γ , σ ⊢ τ → Γ ⊢ σ ▷ τ
     _$_  : ∀ {σ τ} → Γ ⊢ σ ▷ τ → Γ ⊢ σ → Γ ⊢ τ
 
   
 ⟦_⟧ : * → Set₁
-⟦ t ⟧ = {n : ℕ} {Γ : Cx n} → Γ ⊢ t
+⟦ t ⟧ = ∀ {Γ} → Γ ⊢ t
 
 dog : ⟦ ! (⟨ num ∶ sing ⟩ ∷ ⟨ cat ∶ N ⟩ ∷ []) ⟧
 dog = word "dog"
