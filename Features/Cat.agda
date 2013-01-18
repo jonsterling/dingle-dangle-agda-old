@@ -1,4 +1,4 @@
-module DingleDangle.Cat where
+module DingleDangle.Features.Cat where
 
 open import Relation.Nullary
 open import Relation.Binary
@@ -10,7 +10,7 @@ import DingleDangle.DecEq
 data Cat : Set where
   N D V P : Cat
 
-≟InstanceCat : DingleDangle.DecEq.≟Class Cat
+≟InstanceCat : DingleDangle.DecEq.DecEq Cat
 ≟InstanceCat = record { _≟_ = _≟_ } where
   _≟_ : Decidable _≡_
   N ≟ N = yes refl

@@ -17,26 +17,26 @@ open import Relation.Binary.Core
 ------------------------------------------------------------------------
 -- Type class
 
-record ≟Class {ℓ} (A : Set ℓ) : Set ℓ where
+record DecEq {ℓ} (A : Set ℓ) : Set ℓ where
   field
     _≟_ : Decidable {A = A} _≡_
 
-open ≟Class {{...}} public
+open DecEq {{...}} public
 
 ------------------------------------------------------------------------
 -- Instances
 
-≟InstanceBool : ≟Class Bool
+≟InstanceBool : DecEq Bool
 ≟InstanceBool = record { _≟_ = Data.Bool._≟_ }
 
-≟InstanceChar : ≟Class Char
+≟InstanceChar : DecEq Char
 ≟InstanceChar = record { _≟_ = Data.Char._≟_ }
 
-≟Instanceℕ : ≟Class ℕ
+≟Instanceℕ : DecEq ℕ
 ≟Instanceℕ = record { _≟_ = Data.Nat._≟_ }
 
-≟InstanceString : ≟Class String
+≟InstanceString : DecEq String
 ≟InstanceString = record { _≟_ = Data.String._≟_ }
 
-≟Instance⊤ : ≟Class ⊤
+≟Instance⊤ : DecEq ⊤
 ≟Instance⊤ = record { _≟_ = Data.Unit._≟_ }

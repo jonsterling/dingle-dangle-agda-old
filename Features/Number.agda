@@ -1,4 +1,4 @@
-module DingleDangle.Number where
+module DingleDangle.Features.Number where
 
 open import Relation.Nullary
 open import Relation.Binary
@@ -10,7 +10,7 @@ import DingleDangle.DecEq
 data Number : Set where
   sing dual plur : Number
 
-≟InstanceNumber : DingleDangle.DecEq.≟Class Number
+≟InstanceNumber : DingleDangle.DecEq.DecEq Number
 ≟InstanceNumber = record { _≟_ = _≟_ } where
   _≟_ : Decidable _≡_
   sing ≟ sing = yes refl
