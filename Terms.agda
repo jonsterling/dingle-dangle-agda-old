@@ -35,5 +35,3 @@ dog = word "dog"
 the-dog : ⌈ cat ≔ D ∷ num ≔ sing ∷ ⟨⟩ ⌉
 the-dog = the #ᴷ _ # dog
 
-
-

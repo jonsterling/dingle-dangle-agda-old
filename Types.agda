@@ -2,7 +2,6 @@ module DingleDangle.Types (F : Set) (⟦_⟧ᶠ : F → Set) where
 
 open import DingleDangle.Universe
 
-open import Level using (suc)
 open import Function
 open import Data.Unit
 
@@ -27,17 +26,15 @@ data _⊢ᴷ_ Γ : Kind → Set where
   
   ‵∀_ : ∀ {k₁ k₂} → (Γ , k₁) ⊢ᴷ k₂ → Γ ⊢ᴷ k₂
   var : ∀ {k} → Γ ∋ k → Γ ⊢ᴷ k
-  _⇒_ : ∀ (_ _ : Γ ⊢ᴷ *) → Γ ⊢ᴷ *
+  _⇒_ : (_ _ : Γ ⊢ᴷ *) → Γ ⊢ᴷ *
 
-∀⟨_⟩_ : ∀ {Γ} k₁ {k₂} → (Γ , k₁) ⊢ᴷ k₂ → Γ ⊢ᴷ k₂
-∀⟨ _ ⟩ x = ‵∀ x
-  
 -- Types are classified by kinds.
 Uᵀ = record { ctx = Cx; type = Kind; term = _⊢ᴷ_ }
 
 
 private
 
+  -- cribbed from copumpkin's cribbing of pigworker
   record Kit (_◆_ : Cx → Kind → Set) : Set where
     constructor kit
     field
@@ -53,7 +50,7 @@ private
   
   traverse : ∀ {Γ Δ T _◆_} {{_ : Kit _◆_}} → (∀ {X} → Γ ∋ X → Δ ◆ X) → Γ ⊢ᴷ T → Δ ⊢ᴷ T
   traverse τ ⟨⟩ = ⟨⟩
-  traverse τ (f ≔ rep) = f ≔ rep
+  traverse τ (f ≔ val) = f ≔ val
   traverse τ (p ∷ avm) = traverse τ p ∷ traverse τ avm
   traverse τ (var v) = term (τ v)
   traverse τ (‵∀ x) = ‵∀ traverse (lift τ) x
@@ -75,11 +72,4 @@ private
 infix 70 _/_
 _/_ : ∀ {Γ S T} → (Γ , S) ⊢ᴷ T → Γ ⊢ᴷ S → Γ ⊢ᴷ T
 _/_ = flip subst₁
-
-data Env : Cx → Set₁ where
-  ε   : Env ε
-  _,_ : ∀ {Γ T} (xs : Env Γ) (x : Γ ⊢ᴷ T) → Env (Γ , T)
-  
---⟦_⟧ᴷ : Kind → Set₁
---⟦ * ⟧ᴷ = Set
 
