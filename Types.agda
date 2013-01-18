@@ -20,12 +20,23 @@ infixr 0 _∷_
 infixr 70 _⇒_
 
 data _⊢ᴷ_ Γ : Kind → Set where
+
+  -- A feature/value pair: a leaf of the feature structure.
   _≔_ : ∀ f → ⟦ f ⟧ᶠ → Γ ⊢ᴷ feat f
+
+  -- The empty feature matrix.
   ⟨⟩ : Γ ⊢ᴷ *
+
+  -- Consing a leaf onto the feature matrix.
   _∷_ : ∀ {f} → Γ ⊢ᴷ feat f → Γ ⊢ᴷ * → Γ ⊢ᴷ *
   
-  ‵∀_ : ∀ {k₁ k₂} → (Γ , k₁) ⊢ᴷ k₂ → Γ ⊢ᴷ k₂
+  -- Accessing type variables from context.
   var : ∀ {k} → Γ ∋ k → Γ ⊢ᴷ k
+
+  -- Quantification over types of any kind (feature or matrix).
+  ‵∀_ : ∀ {k₁ k₂} → (Γ , k₁) ⊢ᴷ k₂ → Γ ⊢ᴷ k₂
+
+  -- The SELECTS arrow.
   _⇒_ : (_ _ : Γ ⊢ᴷ *) → Γ ⊢ᴷ *
 
 -- Types are classified by kinds.
