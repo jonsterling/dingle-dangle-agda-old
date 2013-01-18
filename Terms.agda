@@ -27,10 +27,10 @@ data _⊢_ Γ : ∀ {G k} → G ⊢ᴷ k → Set where
   -- Term Abstraction: for when a word selects for another.
   ƛ_ : ∀ {G} {σ τ : G ⊢ᴷ *} → (Γ , σ) ⊢ τ → Γ ⊢ σ ⇒ τ
 
-  -- Type Abstration: for introducing feature / matrix dependencies.
+  -- Type Abstraction: for introducing feature / matrix dependencies.
   Λ_ : ∀ {G k₁ k₂} {m : (G , k₁) ⊢ᴷ k₂} → Γ ⊢ m → Γ ⊢ ‵∀ m
 
-  -- Term application: this is MERGE.
+  -- Term Application: this is MERGE.
   _#_ : ∀ {G} {σ τ : G ⊢ᴷ *} → Γ ⊢ σ ⇒ τ → Γ ⊢ σ → Γ ⊢ τ
 
   -- Type Application: this is percolation of features.
