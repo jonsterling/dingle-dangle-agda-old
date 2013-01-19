@@ -1,18 +1,14 @@
-module DingleDangle.Terms where
+module DingleDangle.Terms (F : Set) (⟦_⟧ᶠ : F → Set) where
 
 open import Data.String
 
+import DingleDangle.Types
+open DingleDangle.Types F ⟦_⟧ᶠ public
+
 open import DingleDangle.Universe
-
-open import DingleDangle.Features
-open import DingleDangle.Features.Cat
-open import DingleDangle.Features.Number
-
-open import DingleDangle.Types Features ⟦_⟧f
-
-open Variables Uᴷ using () renaming (_,_ to _,ᴷ_; ε to εᴷ)
-open Variables Uᵀ hiding (top; pop)
-open Variables {{...}} using (top; pop)
+open Variables Uᴷ public using () renaming (_,_ to _,ᴷ_; ε to εᴷ)
+open Variables Uᵀ public hiding (top; pop)
+open Variables {{...}} public using (top; pop)
 
 infixl 70 _#ᴷ_
 infixl 70 _#_
@@ -40,13 +36,3 @@ data _⊢_ (Γ : Cx) : ∀ {G k} → G ⊢ᴷ k → Set where
 
 -- A shorthand for closed types.
 ⌈_⌉ = _⊢_ ε {εᴷ}
-
-the : ⌈ ‵∀ (cat ≔ N ∷ var top) ⇒ (cat ≔ D ∷ var top) ⌉
-the = Λ ƛ word "the"
-
-dog : ⌈ cat ≔ N ∷ num ≔ sing ∷ ⟨⟩ ⌉
-dog = word "dog"
-
-the-dog : ⌈ cat ≔ D ∷ num ≔ sing ∷ ⟨⟩ ⌉
-the-dog = the #ᴷ _ # dog
-

@@ -1,7 +1,6 @@
 module DingleDangle.Types (F : Set) (⟦_⟧ᶠ : F → Set) where
 
 open import DingleDangle.Universe
-
 open import Function
 open import Data.Unit
 
@@ -42,7 +41,6 @@ data _⊢ᴷ_ Γ : Kind → Set where
 -- Types are classified by kinds.
 Uᵀ = record { ctx = Cx; type = Kind; term = _⊢ᴷ_ }
 
-
 private
 
   -- cribbed from copumpkin's cribbing of pigworker
@@ -74,8 +72,7 @@ private
   term-kit = kit var id (traverse pop)
   
   subst₁ : ∀ {Γ S T} → Γ ⊢ᴷ S → (Γ , S) ⊢ᴷ T → Γ ⊢ᴷ T
-  subst₁ {Γ} {S} t = traverse f
-    where
+  subst₁ {Γ} {S} t = traverse f where
     f : ∀ {X} → (Γ , S) ∋ X → Γ ⊢ᴷ X
     f top = t
     f (pop i) = var i
