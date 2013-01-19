@@ -8,8 +8,9 @@ open import Relation.Binary.PropositionalEquality as PropEq
 import DingleDangle.DecEq
 
 open import Function
-open import DingleDangle.Cat
-open import DingleDangle.Number
+open import DingleDangle.Features.Cat
+open import DingleDangle.Features.Number
+
 
 data Features : Set where
   cat : Features
@@ -19,11 +20,11 @@ data Features : Set where
 ⟦ cat ⟧f = Cat
 ⟦ num ⟧f = Number
 
-⟦_⟧≟ : (f : Features) → DingleDangle.DecEq.≟Class ⟦ f ⟧f
+⟦_⟧≟ : (f : Features) → DingleDangle.DecEq.DecEq ⟦ f ⟧f
 ⟦ cat ⟧≟ = ≟InstanceCat
 ⟦ num ⟧≟ = ≟InstanceNumber
 
-≟InstanceFeatures : DingleDangle.DecEq.≟Class Features
+≟InstanceFeatures : DingleDangle.DecEq.DecEq Features
 ≟InstanceFeatures = record { _≟_ = _≟_ } where
   _≟_ : Decidable _≡_
   cat ≟ cat = yes refl

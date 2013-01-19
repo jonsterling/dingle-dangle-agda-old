@@ -4,6 +4,7 @@ open import Function
 
 open import Data.String
 open import Data.Nat
+open import Data.Fin
 open import Data.List
 
 open import Data.Empty
@@ -21,9 +22,11 @@ open import DingleDangle.Features
 open import DingleDangle.Atom
 
 infixr 0 _▷_
+
 data * : Set where
   !_  : Atom → *
   _▷_ : * → * → *
+
 
 data _≲_ : * → * → Set where
   !≲[_] : ∀ {xs ys} → xs ⊆ ys → (! ys) ≲ (! xs)
@@ -48,16 +51,19 @@ data Cx : Set where
   ε : Cx
   _,_ : Cx → * → Cx
 
-data _∋_ : Cx → * → Set where
-  top : ∀ {Γ τ} → Γ , τ ∋ τ
-  pop : ∀ {Γ σ τ} → Γ ∋ τ → Γ , σ ∋ τ
-
-data _⊢_ Γ : * → Set where
-  word : ∀ {fs} → String → Γ ⊢ ! fs
-  cast : ∀ {σ τ} {{_ : True (σ ≲? τ) }} → Γ ⊢ σ → Γ ⊢ τ
-  var  : ∀ {τ} → Γ ∋ τ → Γ ⊢ τ
-  `λ   : ∀ {σ τ} → Γ , σ ⊢ τ → Γ ⊢ σ ▷ τ
-  _#_  : ∀ {σ τ} → Γ ⊢ σ ▷ τ → Γ ⊢ σ → Γ ⊢ τ
+mutual
+  data _∋_ : Cx → * → Set where
+    top : ∀ {Γ τ} → Γ , τ ∋ τ
+    pop : ∀ {Γ σ τ} → Γ ∋ τ → Γ , σ ∋ τ
+  
+  data _⊢_ Γ : * → Set where
+    word : ∀ {fs} → String → Γ ⊢ ! fs
+    cast : ∀ {σ τ} {{_ : True (σ ≲? τ) }} → Γ ⊢ σ → Γ ⊢ τ
+    var  : ∀ {τ} → Γ ∋ τ → Γ ⊢ τ
+    `λ   : ∀ {σ τ} → Γ , σ ⊢ τ → Γ ⊢ σ ▷ τ
+    _#_  : ∀ {σ τ} → Γ ⊢ σ ▷ τ → Γ ⊢ σ → Γ ⊢ τ
+  
+  {-
 
   
 ⟦_⟧ : * → Set
@@ -72,3 +78,4 @@ the = `λ (word "the")
 
 the-dog : ⟦ ! (⟨ cat ∶ D ⟩ ∷ ⟨ num ∶ sing ⟩ ∷ [] ) ⟧
 the-dog = the # cast dog
+-}

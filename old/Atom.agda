@@ -10,6 +10,7 @@ open import Relation.Binary.PropositionalEquality as PropEq
 
 open import Function
 open import Data.Product
+
 open import DingleDangle.DecEq
 open import DingleDangle.Features
 
